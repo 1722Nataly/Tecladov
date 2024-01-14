@@ -1,3 +1,11 @@
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +23,22 @@ public class Tecladov extends javax.swing.JFrame {
      */
     public Tecladov() {
         initComponents();
+        frases = leerPangramaDesdeArchivo("C:/Users/Usuario/Documents/NetBeansProjects/TecladoVirtualApp/src/tecladovirtualapp/ejemplospangramas.txt");
+        Collections.shuffle(frases);
     }
+    private List<String> leerPangramaDesdeArchivo(String ruta) {
+        List<String> listaFrases = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                listaFrases.add(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listaFrases;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
