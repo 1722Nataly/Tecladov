@@ -1,10 +1,13 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,6 +41,49 @@ public class Tecladov extends javax.swing.JFrame {
         }
         return listaFrases;
     }
+    private class ComprobarActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String textoUsuario = textArea.getText().trim();
+        String fraseActual = fraseLabel.getText().trim();
+
+        char[] letrasUsuario = textoUsuario.toCharArray();
+        char[] letrasFrase = fraseActual.toCharArray();
+
+        int longitud = Math.min(letrasUsuario.length, letrasFrase.length);
+        int coincidencias = 0;
+
+        for (int i = 0; i < longitud; i++) {
+            if (letrasUsuario[i] == letrasFrase[i]) {
+                coincidencias++;
+            } else {
+                letrasDificiles.add(letrasFrase[i]);
+                letrasDificiles.add(letrasUsuario[i]); // Agrega también la letra incorrecta
+            }
+        }
+
+       
+        for (char letra : letrasFrase) {
+            if (fraseActual.indexOf(letra) == -1 && !letrasDificiles.contains(letra)) {
+                letrasDificiles.add(letra);
+            }
+        }
+
+        pulsacionesCorrectas += coincidencias;
+        pulsacionesIncorrectas += Math.abs(letrasUsuario.length - coincidencias);
+
+        
+        JOptionPane.showMessageDialog(null,
+                "Pulsaciones correctas: " + pulsacionesCorrectas +
+                        "\nPulsaciones incorrectas: " + pulsacionesIncorrectas +
+                        "\nLetras dificultosas: " + letrasDificiles,
+                "Informe",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        
+        reiniciar();
+    }
+}
     
 
     /**
