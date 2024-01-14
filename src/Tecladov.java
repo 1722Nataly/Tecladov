@@ -84,6 +84,12 @@ public class Tecladov extends javax.swing.JFrame {
         reiniciar();
     }
 }
+    private void eliminarUltimaLetra() {
+        String texto = textArea.getText();
+        if (!texto.isEmpty()) {
+            textArea.setText(texto.substring(0, texto.length() - 1));
+        }
+    }
     
 
     /**
